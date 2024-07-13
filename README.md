@@ -14,6 +14,17 @@ After successfully installing WebTools please login and select the
 "Unsupported Appstore" Module. There you click on the "Agent" tab,
 scroll down and can now easily install the XBMCnfoTVImporter.
 
+### Support:
+
+Project Plex: <a href="https://github.com/Project-Plex/">https://github.com/Project-Plex/</a> | Project Kodi: <a href="https://github.com/Project-Kodi/">https://github.com/Project-Kodi/</a>
+
+<a href="https://discord.com/channels/481047912286257152/481047912286257155"><img src="https://raw.githubusercontent.com/Project-Plex/PlexSportScanner/master/Information/images/discord-logo.png" alt="Join the chat at Discord" height="24"></a> Join us at Discord: <a href="https://discord.com/channels/481047912286257152/481047912286257155">TheDataDB</a>
+
+## Information about this Project:
+
+ NFO file Importer Agent for Plex, that uses www.thesportsdb.com
+
+
 ### Manual Installation:
 Not recommended, but possible if you know what you are doing.
 
