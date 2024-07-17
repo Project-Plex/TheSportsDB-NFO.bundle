@@ -22,7 +22,7 @@ Install on ubuntu as example:
 - run "sudo service plexmediaserver restart".
 Done.
 
-## Documentaion:
+## Documentation:
 
 Please use our documentation first: <a href="https://github.com/Project-Plex/Project-Plex.github.io">https://github.com/Project-Plex/Project-Plex.github.io</a>
 
