@@ -4,7 +4,7 @@ TheSportsDB-NFO.bundle
 =================================
 ## Installation:
 
-1. Download the [zipped bundle: TheSportsDB-NFO.bundle.zip](https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Downloads) from github,
+1. Download the [TheSportsDB-NFO.bundle.zip](https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Downloads) from github,
 2. extract it,
 3. rename it to **TheSportsDB-NFO.bundle**,
 4. find the [Plex Media Server data directory](https://support.plex.tv/hc/en-us/articles/202915258-Where-is-the-Plex-Media-Server-data-directory-located)
