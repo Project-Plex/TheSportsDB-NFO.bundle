@@ -13,7 +13,7 @@ TheSportsDB-NFO.bundle
 7. if necessary change the owner and permissions of the .bundle and
 8. restart plex again.
 
-User MattJ from the plex forum reported the following steps to install on ubuntu 14.04:
+Install on ubuntu as example:
 - Download from github and unzip
 - Remove "-master" from the end of both folder names.
 - Copy them to the folder:  /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
