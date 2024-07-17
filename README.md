@@ -3,20 +3,6 @@
 TheSportsDB-NFO.bundle
 =================================
 ## Installation:
-It is recommended to install the [WebTools plugin](http://forums.plex.tv/discussion/288191/webtools-unsupported-appstore/p1).
-
-Using the Unsupported Appstore from WebTools it is possible
-to easily install, update and remove the Agent, without having
-to go through the hassle of manually downloading, unzipping,
-renaming and moving it to the correct directory each time.
-
-After successfully installing WebTools please login and select the
-"Unsupported Appstore" Module. There you click on the "Agent" tab,
-scroll down and can now easily install the TheSportsDB-NFO.
-
-
-## Manual Installation:
-Not recommended, but possible if you know what you are doing.
 
 1. Download the [zipped bundle](https://github.com/Project-Plex/TheSportsDB-NFO.bundle/releases/download/V.0.9.8/TheSportsDB-NFO.bundle.zip) from github,
 2. extract it,
