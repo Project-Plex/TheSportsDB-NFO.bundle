@@ -335,6 +335,7 @@ class xbmcnfotv(Agent.TV_Shows):
 		# if tv show id doesn't exist, create
 		# one based on hash of title
 		if not id:
+			Log('TH-S:' + th_nr + ' | No ID, create this one: ' + str(id))
 			ord3 = lambda x : '%.3d' % ord(x)
 			id = int(''.join(map(ord3, title)))
 			id = str(abs(hash(int(id))))
@@ -856,6 +857,10 @@ class xbmcnfotv(Agent.TV_Shows):
 									if nfoTextLower.count('<episodedetails') > 0 and nfoTextLower.count('</episodedetails>') > 0:
 										self.DLog("TH-UE:" + th_nr + " |Looks like an XBMC NFO file (has <episodedetails>)")
 										nfoepc = int(nfoTextLower.count('<episodedetails'))
+
+										self.DLog('TH-UE:' + th_nr + ' | NFO => episodedetails => nfoepc:' + str(nfoepc) + '')
+
+
 										nfopos = 1
 										multEpTitlePlexPatch = multEpSummaryPlexPatch = ""
 										multEpTestPlexPatch = 0
@@ -867,7 +872,7 @@ class xbmcnfotv(Agent.TV_Shows):
 											# likely an xbmc nfo file
 											try: nfoXML = XML.ElementFromString(nfoTextTemp).xpath('//episodedetails')[0]
 											except:
-												self.DLog('TH-UE:' + th_nr + ' | ERROR: Cant parse XML in file: ' + nfoFile)
+												self.DLog('TH-UE:' + th_nr + ' | ERROR: Cant parse XML in file: ' + str(nfoFile))
 												return
 
 											# remove remaining empty xml tags
@@ -880,13 +885,14 @@ class xbmcnfotv(Agent.TV_Shows):
 												nfo_ep_num = nfoXML.xpath('episode')[0].text
 												self.DLog('TH-UE:' + th_nr + ' | EpNum from NFO: ' + str(nfo_ep_num))
 											except:
-												self.DLog('TH-UE:' + th_nr + ' | No EpNum from NFO! Assuming: ' + ep_num)
+												self.DLog('TH-UE:' + th_nr + ' | No EpNum from NFO! Assuming: ' + str(ep_num))
 												nfo_ep_num = ep_num
 												pass
 
 											# Checks to see user has renamed files so plex ignores multiepisodes and confirms that there is more than on episodedetails
 											if not re.search('.s\d{1,3}e\d{1,3}[-]?e\d{1,3}.', path1.lower()) and (nfoepc > 1):
 												multEpTestPlexPatch = 1
+												self.DLog('TH-UE:' + th_nr + ' | multEpTestPlexPatch: ' + str(multEpTestPlexPatch) + '')
 
 											# Creates combined strings for Plex MultiEpisode Patch
 											if multEpTestPlexPatch and Prefs['multEpisodePlexPatch'] and (nfoepc > 1):
@@ -896,33 +902,69 @@ class xbmcnfotv(Agent.TV_Shows):
 													if nfopos == 1:
 														multEpTitlePlexPatch = nfoXML.xpath('title')[0].text
 														multEpSummaryPlexPatch = "[Episode #" + str(nfo_ep_num) + " - " + nfoXML.xpath('title')[0].text + "] " + nfoXML.xpath('plot')[0].text
+														self.DLog("TH-UE:" + th_nr + " multEpTestPlexPatch Details 1: [Episode #" + str(nfo_ep_num) + " - " + nfoXML.xpath('title')[0].text + "] " + nfoXML.xpath('plot')[0].text)
 													else:
 														multEpTitlePlexPatch = multEpTitlePlexPatch + multEpTitleSeparator + nfoXML.xpath('title')[0].text
 														multEpSummaryPlexPatch = multEpSummaryPlexPatch + "\n" + "[Episode #" + str(nfo_ep_num) + " - " + nfoXML.xpath('title')[0].text + "] " + nfoXML.xpath('plot')[0].text
+														self.DLog("TH-UE:" + th_nr + " multEpTestPlexPatch Details 2: " + multEpSummaryPlexPatch + "\n" + "[Episode #" + str(nfo_ep_num) + " - " + nfoXML.xpath('title')[0].text + "] " + nfoXML.xpath('plot')[0].text)
 												except: pass
 											else:
 												if int(nfo_ep_num) == int(ep_num):
 													self.DLog('TH-UE:' + th_nr + ' | Multi Episode => break')
 													nfoText = nfoTextTemp
 													break
-
+##Positionsänderung => nfopos = nfopos + 1
 											nfopos = nfopos + 1
+
+										# Wenn kein Multiepisoden oder nicht Addon Settings und	
+										#Helper if loop only 1 => then is 2, correct this here
+										if nfopos == 2:
+											self.DLog('TH-UE:' + th_nr + ' | Correct Loop nfopos when only 1 entry here')
+											nfopos = 1
 
 										if (not multEpTestPlexPatch or not Prefs['multEpisodePlexPatch']) and (nfopos > nfoepc):
 											self.DLog('TH-UE:' + th_nr + ' | No matching episode in nfo file!')
+											self.DLog('TH-UE:' + th_nr + ' | No matching episode in nfo file => nfopos:' + str(nfopos) + '')
+											self.DLog('TH-UE:' + th_nr + ' | No matching episode in nfo file => nfoepc:' + str(nfoepc) + '')
+
+											x = nfoXML.xpath('title')[0].text
+											self.DLog('TH-UE:' + th_nr + ' | No matching episode in nfo file => title solo:' + str(x) + '')
+											self.DLog('TH-UE:' + th_nr + ' | No matching episode in nfo file => send now RETURN')
 											return
+###
+
+
 
 										# Ep. Title
 										if Prefs['multEpisodePlexPatch'] and (multEpTitlePlexPatch != ""):
-											self.DLog('TH-UE:' + th_nr + ' | using multi title: ' + multEpTitlePlexPatch)
+											self.DLog('TH-UE:' + th_nr + ' | using multi title: ' + str(multEpTitlePlexPatch))
 											episode.title = multEpTitlePlexPatch
 										else:
+											
+											self.DLog('TH-UE:' + th_nr + ' | No Multi Title, wenn nicht Settings gesetzt und erfassung von Multi leer dann:')
+
+
 											try: 
 												episode.title = nfoXML.xpath('title')[0].text
-												self.DLog("TH-UE:" + th_nr + " |TRY <title> tag in episode.title: " + episode.title + "")
+												self.DLog("TH-UE:" + th_nr + " |TRY <title> tag in episode.title: " + str(episode.title) + "")
 											except:
-												self.DLog("TH-UE:" + th_nr + " |ERROR: No <title> tag in " + nfoFile + ". Aborting!")
+												self.DLog("TH-UE:" + th_nr + " |ERROR: No <title> tag in " + str(nfoFile) + ". Aborting!")
 												return
+											
+
+#new Test											
+										try:
+											self.DLog("TH-UE:" + th_nr + " | episode.title test: " + str(episode.title) + "")
+											if not episode.title:
+												self.DLog("TH-UE:" + th_nr + " | episode.title not set!: " + str(episode.title) + "")
+												episode.title = nfoXML.xpath('title')[0].text
+												self.DLog("TH-UE:" + th_nr + " | episode.title set to: " + str(episode.title) + "")
+										except:	
+											self.DLog("TH-UE:" + th_nr + " | no episode.title set => except!")
+
+
+
+
 										# Ep. Content Rating
 										try:
 											mpaa = nfoXML.xpath('./mpaa')[0].text
@@ -939,7 +981,7 @@ class xbmcnfotv(Agent.TV_Shows):
 											try:
 												self.DLog("TH-UE:" + th_nr + " |Reading aired tag...")
 												air_string = nfoXML.xpath("aired")[0].text
-												self.DLog("TH-UE:" + th_nr + " |Aired tag is: " + air_string)
+												self.DLog("TH-UE:" + th_nr + " |Aired tag is: " + str(air_string))
 											except:
 												self.DLog("TH-UE:" + th_nr + " |No aired tag found...")
 												pass
@@ -947,7 +989,7 @@ class xbmcnfotv(Agent.TV_Shows):
 												try:
 													self.DLog("TH-UE:" + th_nr + " |Reading dateadded tag...")
 													air_string = nfoXML.xpath("dateadded")[0].text
-													self.DLog("TH-UE:" + th_nr + " |Dateadded tag is: " + air_string)
+													self.DLog("TH-UE:" + th_nr + " |Dateadded tag is: " + str(air_string))
 												except:
 													self.DLog("TH-UE:" + th_nr + " |No dateadded tag found...")
 													pass
@@ -960,14 +1002,14 @@ class xbmcnfotv(Agent.TV_Shows):
 													episode.originally_available_at = dt
 													self.DLog("TH-UE:" + th_nr + " |Set premiere to: " + dt.strftime('%Y-%m-%d'))
 												except:
-													self.DLog("TH-UE:" + th_nr + " |Couldn't parse premiere: " + air_string)
+													self.DLog("TH-UE:" + th_nr + " |Couldn't parse premiere: " + str(air_string))
 													pass
 										except:
 											self.DLog("TH-UE:" + th_nr + " |Exception parsing Ep Premiere: " + traceback.format_exc())
 											pass
 										# Ep. Summary
 										if Prefs['multEpisodePlexPatch'] and (multEpSummaryPlexPatch != ""):
-											self.DLog('TH-UE:' + th_nr + ' | using multi summary: ' + multEpSummaryPlexPatch)
+											self.DLog('TH-UE:' + th_nr + ' | using multi summary: ' + str(multEpSummaryPlexPatch))
 											episode.summary = multEpSummaryPlexPatch
 										else:
 											try: 
@@ -1097,6 +1139,11 @@ class xbmcnfotv(Agent.TV_Shows):
 												Dict[duration_key][eduration_min] = Dict[duration_key][eduration_min] + 1
 										except:
 											pass
+
+### cut begin
+
+
+
 										#Agent Setting
 										if not Prefs['localmediaagent']:
 											multEpisode = (nfoepc > 1) and (not Prefs['multEpisodePlexPatch'] or not multEpTestPlexPatch)
@@ -1122,17 +1169,32 @@ class xbmcnfotv(Agent.TV_Shows):
 											else:
 												Log('TH-UE:' + th_nr + ' Looking for episode assets for %s season %s from url', metadata.title, season_num)
 												try:
-													thumb = nfoXML.xpath('thumb')[0]
-													Log('TH-UE:' + th_nr + ' Trying to get thumbnail for episode %s for %s season %s from url.', ep_num,  metadata.title, season_num)
-													try:
-														episode.thumbs[thumb.text] = Proxy.Media(HTTP.Request(thumb.text))
-														episode.thumbs.validate_keys([thumb.text])
-														Log('Found episode thumbnail from url')
-													except Exception as e:
-														Log('TH-UE:' + th_nr + ' Error download episode thumbnail %s for %s season %s from url: %s', ep_num,  metadata.title, season_num, str(e))
+
+#
+													thumb_full = nfoXML.xpath('thumb')
+													if not thumb_full:
+														Log('TH-UE:' + th_nr + ' Looking for episode assets for thumbs, but empty!')
+													else:
+														Log('TH-UE:' + th_nr + ' Looking for episode assets for thumbs, any is here!')
+														thumb = nfoXML.xpath('thumb')[0]
+#
+
+													#thumb = nfoXML.xpath('thumb')[0]
+
+														Log('TH-UE:' + th_nr + ' Trying to get thumbnail for episode %s for %s season %s from url.', ep_num,  metadata.title, season_num)
+														try:
+
+															episode.thumbs[thumb.text] = Proxy.Media(HTTP.Request(thumb.text))
+															episode.thumbs.validate_keys([thumb.text])
+															Log('TH-UE:' + th_nr + ' Found episode thumbnail from url')
+														except Exception as e:
+															Log('TH-UE:' + th_nr + ' Error download episode thumbnail %s for %s season %s from url: %s', ep_num,  metadata.title, season_num, str(e))
+															pass
 												except Exception, e:
 													Log('TH-UE:' + th_nr + ' Error finding episode thumbnail %s for %s season %s from url: %s', ep_num,  metadata.title, season_num, str(e))
+													pass
 
+##cut end
 
 										self.DLog("TH-UE:" + th_nr + " | -----EPISODE START----------")
 
