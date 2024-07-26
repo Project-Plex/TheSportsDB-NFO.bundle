@@ -707,7 +707,7 @@ class xbmcnfotv(Agent.TV_Shows):
 										if not response == 200:
 											self.DLog ('failed setting ' + athumbloc + ' actor photo: ' + aimagepath)
 											aimagepath = None
-									if aimagepaTH-U:
+									if aimagepath:
 										newrole.photo = aimagepath
 										self.DLog ('success setting ' + athumbloc + ' actor photo: ' + aimagepath)
 						except:
@@ -1070,22 +1070,88 @@ class xbmcnfotv(Agent.TV_Shows):
 												episode.rating = epnforating
 											else:
 												episode.rating = epnforating
+
+
+
+
+
+
+
+										# Ep. Actors
+										try:
+											#episode.producers.clear()
+											episode.producers.clear()
+									
+											for n, actor in enumerate(nfoXML.xpath('actor')):
+
+												#newrole = episode.producers.new()
+												newrole = episode.producers.new()
+
+												self.DLog("Check this actor => ")
+												self.DLog(actor)
+
+												try:
+													ep_name = actor.find('name').text
+												except:
+													ep_name =''
+													pass
+
+												try:
+													ep_role = actor.find('role').text
+												except:
+													ep_role =''
+													pass
+
+												try:
+													ep_thumb = actor.find('thumb').text
+												except:
+													ep_thumb =''
+													pass												
+
+
+	
+												self.DLog("Actor Übersicht:")
+												self.DLog("Actor Name:" + ep_name)
+												self.DLog("Actor Role:" + ep_role)
+												self.DLog("Actor Thumb:" + ep_thumb)
+
+
+												newrole.name = ep_name
+												newrole.role = ep_role
+												newrole.photo = ep_thumb	
+
+
+
+										except:
+											self.DLog("TH-UE:" + th_nr + " Check Actor in Episode => Except")
+
+											pass
+
+
+
+
+
+
+
+
+
 										# Ep. Producers / Writers / Guest Stars(Credits)
 										try:
 											credit_string = None
 											credits = nfoXML.xpath('credits')
-											episode.producers.clear()
+											#episode.producers.clear()
 											episode.writers.clear()
 											episode.guest_stars.clear()
+
 											for creditXML in credits:
 												for credit in creditXML.text.split("/"):
 													credit_string = credit.strip()
 													self.DLog("TH-UE:" + th_nr + " | Credit String: " + credit_string)
-													if re.search ("(Producer)", credit_string, re.IGNORECASE):
-														credit_string = re.sub ("\(Producer\)","",credit_string,flags=re.I).strip()
-														self.DLog("TH-UE:" + th_nr + " | Credit (Producer): " + credit_string)
-														episode.producers.new().name = credit_string
-														continue
+													#if re.search ("(Producer)", credit_string, re.IGNORECASE):
+													#	credit_string = re.sub ("\(Producer\)","",credit_string,flags=re.I).strip()
+													#	self.DLog("TH-UE:" + th_nr + " | Credit (Producer): " + credit_string)
+													#	episode.producers.new().name = credit_string
+													#	continue
 													if re.search ("(Guest Star)", credit_string, re.IGNORECASE):
 														credit_string = re.sub ("\(Guest Star\)","",credit_string,flags=re.I).strip()
 														self.DLog("TH-UE:" + th_nr + " | Credit (Guest Star): " + credit_string)
@@ -1101,6 +1167,11 @@ class xbmcnfotv(Agent.TV_Shows):
 										except:
 											self.DLog("TH-UE:" + th_nr + " |Exception parsing Credits: " + traceback.format_exc())
 											pass
+
+
+
+
+
 										# Ep. Directors
 										try:
 											directors = nfoXML.xpath('director')
@@ -1261,6 +1332,14 @@ class xbmcnfotv(Agent.TV_Shows):
 											self.DLog("TH-UE:" + th_nr + " | Summary: " + str(episode.summary))
 										except: 
 											self.DLog("TH-UE:" + th_nr + " | Summary: -")
+											pass
+
+										try: 
+											self.DLog("TH-UE:" + th_nr + " | Actors:")
+											for actor in episode.actors:
+												self.DLog("TH-UE:" + th_nr + " |\t" + str(actor) + " > ") 
+										except:
+											self.DLog("TH-UE:" + th_nr + " | NO Actors Episode Except:")
 											pass
 										self.DLog("TH-UE:" + th_nr + " | Writers:")
 										try: 
