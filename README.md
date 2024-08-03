@@ -1,5 +1,7 @@
 ![Code QL](https://github.com/Project-Plex/TheSportsDB-NFO.bundle/actions/workflows/codeql.yml/badge.svg)
 
+### Plex NFO Importer for TheSportsDB - Project Plex
+
 TheSportsDB-NFO.bundle
 =================================
 ## Installation:
