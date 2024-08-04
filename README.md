@@ -32,7 +32,7 @@
 
 Please use the: <a href="https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Information/The%20Sports%20Database%20-%20Plex%20NFO%20Importer" target="_blank">Plex NFO Importer Documentation</a>
 
-Or the TheSportsDB.com Forum Thread: <a href="https://www.thesportsdb.com/forum_topic.php?t=5972" target="_blank">[Plex Add-on] Plex NFO Importer</a>
+Or the TheSportsDB.com Forum: <a href="https://www.thesportsdb.com/forum_topic.php?t=5972" target="_blank">[Plex Add-on] Plex NFO Importer</a>
 
 ## Support:
 
