@@ -1132,7 +1132,7 @@ class xbmcnfotv(Agent.TV_Shows):
 
 
 
-
+#NFO Credtis/Producer/Writers => Without image in NFO,,, not good
 
 
 										# Ep. Producers / Writers / Guest Stars(Credits)
@@ -1155,15 +1155,15 @@ class xbmcnfotv(Agent.TV_Shows):
 													if re.search ("(Guest Star)", credit_string, re.IGNORECASE):
 														credit_string = re.sub ("\(Guest Star\)","",credit_string,flags=re.I).strip()
 														self.DLog("TH-UE:" + th_nr + " | Credit (Guest Star): " + credit_string)
-														episode.guest_stars.new().name = credit_string
+#														episode.guest_stars.new().name = credit_string
 														continue
 													if re.search ("(Writer)", credit_string, re.IGNORECASE):
 														credit_string = re.sub ("\(Writer\)","",credit_string,flags=re.I).strip()
 														self.DLog("TH-UE:" + th_nr + " | Credit (Writer): " + credit_string)
-														episode.writers.new().name = credit_string
+#														episode.writers.new().name = credit_string
 														continue
 													self.DLog("TH-UE:" + th_nr + " | Unknown Credit (adding as Writer): " + credit_string)
-													episode.writers.new().name = credit_string
+#													episode.writers.new().name = credit_string
 										except:
 											self.DLog("TH-UE:" + th_nr + " |Exception parsing Credits: " + traceback.format_exc())
 											pass
@@ -1180,10 +1180,14 @@ class xbmcnfotv(Agent.TV_Shows):
 												for director in directorXML.text.split("/"):
 													director_string = director.strip()
 													self.DLog("TH-UE:" + th_nr + " | Director: " + director)
-													episode.directors.new().name = director
+#													episode.directors.new().name = director
 										except:
 											self.DLog("TH-UE:" + th_nr + " |Exception parsing Director: " + traceback.format_exc())
 											pass
+
+
+
+
 										# Ep. Duration
 										try:
 											self.DLog("TH-UE:" + th_nr + " | Trying to read <durationinseconds> tag from episodes .nfo file...")
