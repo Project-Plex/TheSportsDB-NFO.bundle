@@ -3,6 +3,9 @@
 TheSportsDB-NFO.bundle
 =================================
 
+# Project Plex - The Sports Database - Plex NFO Importer
+## TheSportsDB-NFO.bundle
+
 ### Download & Installation
 
 1. Download the [TheSportsDB-NFO.bundle.zip](https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Downloads) from github,
@@ -30,7 +33,7 @@ TheSportsDB-NFO.bundle
 
 ## Documentation:
 
-Please use the documentation: <a href="https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Information/The%20Sports%20Database%20-%20Plex%20NFO%20Importer" target="_blank"></a>
+Please use the: <a href="https://github.com/Project-Plex/Project-Plex.github.io/tree/main/Information/The%20Sports%20Database%20-%20Plex%20NFO%20Importer" target="_blank">Plex NFO Importer Documentation</a>
 
 ## Support:
 
